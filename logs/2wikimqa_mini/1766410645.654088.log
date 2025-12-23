@@ -1,0 +1,26 @@
+2025-12-22 19:07:25,654 - __main__ - INFO - ::> PIPELINE INFO:
+                Dataset: 2wikimqa_mini
+                Retrieval Method: browsenet
+                Sem Model: nvembedv2
+                Device: cuda
+                NER Model: gliner
+                Subquery Model: gpt-4o
+                Colbert Threshold: 0.9
+                Number of Subgraphs: 5
+                Alpha: 0.0
+                Number of Chunks: 5
+                
+2025-12-22 19:07:25,654 - __main__ - INFO - ::> Time taken to load the encoder: 4.76837158203125e-07 seconds
+2025-12-22 19:07:25,654 - __main__ - INFO - ::> Initializing BrowseNet...
+2025-12-22 19:07:25,655 - __main__ - INFO - ::> Indexing...
+2025-12-22 19:07:25,655 - src.BrowseNet - INFO - ::> Keywords extracted. Time taken: 5.1975250244140625e-05 seconds.
+2025-12-22 19:07:25,661 - src.BrowseNet - INFO - ::> Entity linking done. Time taken: 0.006548881530761719 seconds.
+2025-12-22 19:07:25,661 - src.BrowseNet - INFO - ::> Similar keywords extracted. Time taken: 4.076957702636719e-05 seconds.
+2025-12-22 19:07:25,661 - src.BrowseNet - INFO - ::> Graph constructed. Time taken: 3.457069396972656e-05 seconds.
+2025-12-22 19:07:25,662 - src.BrowseNet - INFO - ::> Total time taken for indexing: 0.006891727447509766 seconds.
+
+
+
+2025-12-22 19:07:25,662 - src.BrowseNet - INFO - ::> Loading Encoder...
+2025-12-22 19:07:25,662 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: nvidia/NV-Embed-v2
+2025-12-22 19:07:42,451 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda

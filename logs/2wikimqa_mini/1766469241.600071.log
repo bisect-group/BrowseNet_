@@ -1,0 +1,56 @@
+2025-12-23 11:24:01,600 - __main__ - INFO - ::> PIPELINE INFO:
+                Dataset: 2wikimqa_mini
+                Retrieval Method: browsenet
+                Sem Model: nvembedv2
+                Device: cuda
+                NER Model: gliner
+                Subquery Model: gpt-4o
+                Colbert Threshold: 0.9
+                Number of Subgraphs: 5
+                Alpha: 0.0
+                Number of Chunks: 5
+                
+2025-12-23 11:24:01,600 - __main__ - INFO - ::> Time taken to load the encoder: 2.384185791015625e-07 seconds
+2025-12-23 11:24:01,600 - __main__ - INFO - ::> Initializing BrowseNet...
+2025-12-23 11:24:01,600 - __main__ - INFO - ::> Indexing...
+2025-12-23 11:24:01,600 - src.BrowseNet - INFO - ::> Keywords extracted. Time taken: 4.124641418457031e-05 seconds.
+2025-12-23 11:24:01,605 - src.BrowseNet - INFO - ::> Entity linking done. Time taken: 0.0045413970947265625 seconds.
+2025-12-23 11:24:01,605 - src.BrowseNet - INFO - ::> Similar keywords extracted. Time taken: 4.267692565917969e-05 seconds.
+2025-12-23 11:24:01,605 - src.BrowseNet - INFO - ::> Graph constructed. Time taken: 4.076957702636719e-05 seconds.
+2025-12-23 11:24:01,605 - src.BrowseNet - INFO - ::> Total time taken for indexing: 0.0048596858978271484 seconds.
+
+
+
+2025-12-23 11:24:01,605 - src.BrowseNet - INFO - ::> Loading Encoder...
+2025-12-23 11:24:01,606 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: nvidia/NV-Embed-v2
+2025-12-23 11:24:15,348 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda
+2025-12-23 11:24:19,065 - src.BrowseNet - INFO - ::> Encoder Loaded Successfully in 17.459906816482544 seconds
+2025-12-23 11:24:19,066 - src.BrowseNet - INFO - ::> Chunk embeddings ready. Time taken: 17.460781574249268 seconds.
+2025-12-23 11:24:19,067 - __main__ - INFO - ::> Total Questions: 10
+2025-12-23 11:24:19,067 - __main__ - INFO - ::> Starting Retrieval...
+2025-12-23 11:24:32,181 - src.BrowseNet - INFO - ::> Subqueries generated. Time taken: 13.114643335342407 seconds.
+2025-12-23 11:24:32,181 - src.BrowseNet - INFO - ::> Subquery generation completed in 13.114772081375122 seconds
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Retrieval Completed Successfully in 8.369373559951782 seconds
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Total time taken for retrieval: 21.484284162521362 seconds.
+
+
+
+2025-12-23 11:24:40,551 - __main__ - INFO - ::> Starting Retrieval Evaluation...
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> ===================================================== 
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> BrowseNet Retrieval Results: 
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Recall@2: 0.65
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Recall@5: 0.775
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Recall@10: 0.8
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Recall@20: 0.8
+2025-12-23 11:24:40,551 - src.BrowseNet - INFO - ::> Recall Overall: 0.8
+2025-12-23 11:24:40,551 - __main__ - INFO - ::> Starting QA...
+2025-12-23 11:24:45,696 - src.BrowseNet - INFO - ::> QA Completed Successfully in 5.145106077194214 seconds
+2025-12-23 11:24:45,696 - __main__ - INFO - ::> Starting QA Evaluation...
+2025-12-23 11:24:45,697 - src.BrowseNet - INFO - ::> ===================================================== 
+2025-12-23 11:24:45,697 - src.BrowseNet - INFO - ::> QA Evaluation Results: 
+2025-12-23 11:24:45,697 - src.BrowseNet - INFO - ::> EM: 0.6
+2025-12-23 11:24:45,697 - src.BrowseNet - INFO - ::> F1: 0.6545454545454545
+2025-12-23 11:24:45,697 - __main__ - INFO - ::> Total time taken for the pipeline: 44.096803188323975 seconds.
+
+
+
