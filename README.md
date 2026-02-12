@@ -1,7 +1,7 @@
-<h1 align="center"> <img src="images/BN.png" width="30" height="30"> Structured Traversal of Knowledge Graphs for Multi-hop Question Answering
+<h1 align="center"> <img src="images/BN.png" width="30" height="30"> BrowseNet: Graph-Based Associative Memory for Contextual Information Retrieval
 </h1>
 
-BrowseNet is a novel Retrieval Augumented Generation (RAG) framework that identifies and leverages the structure in a multi-hop query to traverse on a Knowledge Graph for information retrieval.
+BrowseNet is a novel Retrieval Augumented Generation (RAG) framework that identifies and leverages the structure in a multi-hop query to traverse on a Graph-of-chunks for information retrieval.
 
 ![BrowseNet](images/browseNet.png)
 
