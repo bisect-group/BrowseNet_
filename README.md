@@ -109,4 +109,17 @@ All parameters must be defined as environment variables. A sample `.env` file is
 - `MODEL` — LLM variant for QA (`gpt-4o`, `gpt-3.5-turbo`)
 ---
 
-Once all environment variables are configured, running `main.py` will index the corpus, perform retrieval, and generate answers for the selected dataset.
+Once all environment variables are configured, running `main.py` script will index the corpus, perform retrieval, and generate answers for the selected dataset.
+
+## Citation
+If you find BrowseNet useful in your research, please cite our work:
+```bibtex
+@inproceedings{
+s2026browsenet,
+title={BrowseNet: Knowledge Graph-Based Associative Memory for Contextual Information Retrieval},
+author={PAVAN KUMAR S and Kiran Kumar Nakka and C Vamshi Krishna Reddy and Divyateja Pasupuleti and Prakhar Agarwal and Harpinder Jot Singh and Anshu Avinash and Nirav Pravinbhai Bhatt},
+booktitle={The Fourteenth International Conference on Learning Representations},
+year={2026},
+url={https://openreview.net/forum?id=2q5CugVPoK}
+}
+```
