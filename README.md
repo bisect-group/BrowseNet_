@@ -1,69 +1,112 @@
-<h1 align="center"> <img src="images/BN.png" width="30" height="30"> BrowseNet: Graph-Based Associative Memory for Contextual Information Retrieval
+</h1>
+<h1 align="center"> <img src="images/BN.png" width="30" height="25"> BrowseNet: Graph-Based Associative Memory for Contextual Information Retrieval
 </h1>
 
-BrowseNet is a novel Retrieval Augumented Generation (RAG) framework that identifies and leverages the structure in a multi-hop query to traverse on a Graph-of-chunks for information retrieval.
+**BrowseNet** is a graph-based associative memory framework for Retrieval-Augmented Generation (RAG) that decomposes multi-hop queries into a directed acyclic graph (DAG), termed a query-subgraph, and traverses a Graph-of-Chunks to retrieve structured, reasoning-aligned context for LLMs.
 
 ![BrowseNet](images/browseNet.png)
+<p align="center">
+  <b>Figure 1:</b> BrowseNet overview.
+</p>
 
-## Setup Environment
+BrowseNet achieves **state-of-the-art** performance while being highly **cost-efficient**, reducing LLM costs by ~33× compared to the previous SOTA, HippoRAG-2, without a significant latency trade-off. This makes BrowseNet well-suited for large-scale, cost-sensitive RAG scenarios.
 
-Create a conda environment and install dependency:
+<p align="center">
+  <img src="images/browsenet_results_overall.png" />
+</p>
+
+<p align="center">
+  <b>Figure 2:</b>
+  (a) Average retrieval performance across the 2WikiMQA, HotpotQA, and MuSiQue datasets.
+  (b) Latency and cost comparison between BrowseNet and HippoRAG-2.
+</p>
+
+> [!NOTE]
+> Latency is measured as Average Time Per Query (ATPQ) over 50 sampled questions from the MuSiQue dataset and may vary depending on system hardware, runtime environment, and configuration settings. Cost analysis is based on the HotpotQA benchmark and reflects the full pipeline cost using *gpt-4o-mini* in both systems, computed with OpenAI’s API pricing ($0.15 per 1M input tokens and $0.6 per 1M output tokens, as of Sept 24, 2025).
+
+## Environment Setup
+
+Set up the Conda environment and install the required dependencies:
 
 ```shell
 conda env create -f environment.yml
 ```
 
-To match keywords with the similar keywords, ColBERTV2 is required download the pre-trained [checkpoint](https://downloads.cs.stanford.edu/nlp/data/colbert/colbertv2/colbertv2.0.tar.gz), extract and put it in the folder 'src/indexer/exp/colbertv2.0'.
+To enable semantic keyword matching, ColBERTv2 is required. Download the pre-trained [checkpoint](https://downloads.cs.stanford.edu/nlp/data/colbert/colbertv2/colbertv2.0.tar.gz), extract it into `src/indexer/exp/`
 
 ```shell
 cd src/indexer/exp
 wget https://downloads.cs.stanford.edu/nlp/data/colbert/colbertv2/colbertv2.0.tar.gz
 tar -xvzf colbertv2.0.tar.gz
 ```
-## Format of the dataset
-All the benchmark datasets used in this study is available in the folder ./Datasets/. 
-To test BrowseNet on a new dataset follow the below steps:
-1. Create a folder in ./datasets. The name of the folder has to be the name of the dataset
-2. Corpus and the questions have to be uploaded in the specified folder as corpus.json and questions.json respectively.
-3. The format of corpus.json has to be as shown below
+## Dataset Format
+All benchmark datasets used in this study are available under `./datasets/`.
+
+To evaluate BrowseNet on a new dataset, follow the steps below.
+
+### 1️⃣ Create Dataset Directory
+Create a new folder under `./datasets/ ` named `./datasets/<dataset_name>/`.  
+The folder name *must match the dataset name*.
+
+### 2️⃣ Required Files
+Upload the following files to the dataset folder:
+
+- `corpus.json` — document corpus  
+- `questions.json` — multi-hop queries  
+
+### 3️⃣ `corpus.json` Format
+Each entry represents a passage in the corpus.
+
 ```json
 [
   {
     "title": "<title of the passage>",
     "text": "<passage>"
-  },
+  }
 ]
 ```
-4. The format of questions.json has to be as shown below. "gold_ids", "edge_list", and "answer" are optional properties required for evaluation of the pipeline for retrieval, knowledge graph construction and answer generation respectively.
+### 4️⃣ `questions.json` Format
+Each entry corresponds to a multi-hop query.  
+The fields *`gold_ids`*, *`edge_list`*, and *`answer`* are *optional* and are used for evaluating retrieval, Graph-of-Chunks construction, and answer generation stages respectively.
+
 ```json
 [
   {
     "question": "<multi-hop query>",
-    "gold_ids": "<list of indices of corpus required to answer the question>",
-    "edge_list": "<list of edges in query-subgraph>",
-    "answer": "<answer to the question>"
-  },
+    "gold_ids": "<list of corpus indices required to answer the question>",
+    "edge_list": "<list of edges in the query-subgraph>",
+    "answer": "<ground-truth answer>"
+  }
 ]
 ```
 
-Parameters required to be defined are:
-- OPENAI_API_KEY: Open AI API key required to be defined to use the OPENAI models
-- DEEPSEEK_API_KEY: Deepseek API key requierd to be defined to use the deepseek models (Optional)
-- DEVICE: 'cuda' or 'cpu'. This defines the device to load the encoder model
-- DATASET: '2wikimqa' or 'hotpoqa' or 'musique'. This defines the name of the dataset
-- ALPHA: 0-1. This defines the weightage to be provided for sparse encoder like 'TF_IDF'. In this study we have used 0 for all the results
-- RETRIEVAL_METHOD: 'browsenet' or 'naiverag'
-- NER_MODEL: 'gliner' or 'gpt-4o'. This defines the type of model to use for NER
-- SEM_MODEL: 'miniLM' or 'stella' or 'nvembedv2' or 'granite' or 'qwen2'. Model to use to generate the dense embeddings
-- N_SUBGRAPHS: 5. The parameter that defined number of subgraphs to be retrieved. Larger numbers require increased context size.
-- SUBQUERY_MODEL: 'gpt-4o' or 'o4-mini' or 'deepseek-reasoner'
-- COLBERT_THRESHOLD: 0.9. This defines the synonymity threshold to get the similar words.
-- LLM: 'openai' or 'deepseek'. LLM to use for QA
-- MODEL: 'gpt-4o' or 'gpt-3.5-turbo'. The model to choose for QA
-- N_CHUNKS: 5. Number of chunks to be provided as context for answer generation.
+## ⚙️ Environment Variables
 
+All parameters must be defined as environment variables. A sample `.env` file is provided in the repository.
 
-All the above parameters have to be stored as environment variables. The sample .env file is provided in the repo
+### 🔑 API Keys
+- `OPENAI_API_KEY` — API key for OpenAI-based models
+- `DEEPSEEK_API_KEY` — API key for DeepSeek models (optional)
 
+### 🖥️ System Configuration
+- `DEVICE` — Device for loading encoder models (`cuda` or `cpu`)
 
-Once the above parameters are defined, then running, main.py file should index, retrieve and generate answers for the provided dataset.
+### 🕸️ Graph-of-Chunks Construction
+- `COLBERT_THRESHOLD` — Threshold for synonym matching using ColBERTv2 (default: `0.9`)
+
+### 📊 Dataset & Retrieval
+- `DATASET` — Dataset name (`2wikimqa`, `hotpotqa`, `musique`)
+- `RETRIEVAL_METHOD` — Retrieval strategy (`browsenet` or `naiverag`)
+- `N_SUBGRAPHS` — Number of subgraphs retrieved per query
+- `N_CHUNKS` — Number of chunks used for answer generation (default: `5`)
+- `ALPHA` — Sparse retriever weight in hybrid retrieval (`0–1`, set to `0` in this study)
+
+### 🧠 Models
+- `NER_MODEL` — Named entity recognition model (`gliner` or `gpt-4o`)
+- `SEM_MODEL` — Dense embedding model (`miniLM`, `stella`, `nvembedv2`, `granite`, `qwen2`)
+- `SUBQUERY_MODEL` — LLM for query decomposition (`gpt-4o`, `o4-mini`, `deepseek-reasoner`)
+- `LLM` — LLM provider (`openai` or `deepseek`)
+- `MODEL` — LLM variant for QA (`gpt-4o`, `gpt-3.5-turbo`)
+---
+
+Once all environment variables are configured, running `main.py` will index the corpus, perform retrieval, and generate answers for the selected dataset.
