@@ -116,7 +116,7 @@ If you find BrowseNet useful in your research, please cite our work:
 ```bibtex
 @inproceedings{
 s2026browsenet,
-title={BrowseNet: Knowledge Graph-Based Associative Memory for Contextual Information Retrieval},
+title={BrowseNet: Graph-Based Associative Memory for Contextual Information Retrieval},
 author={PAVAN KUMAR S and Kiran Kumar Nakka and C Vamshi Krishna Reddy and Divyateja Pasupuleti and Prakhar Agarwal and Harpinder Jot Singh and Anshu Avinash and Nirav Pravinbhai Bhatt},
 booktitle={The Fourteenth International Conference on Learning Representations},
 year={2026},
